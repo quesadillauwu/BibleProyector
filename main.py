@@ -2,6 +2,8 @@ import sys
 import json
 import math
 import io
+from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput, QVideoSink
+from PyQt6.QtCore import QUrl
 from PyQt6.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout,
                              QPushButton, QComboBox, QHBoxLayout, QSpinBox,
                              QCheckBox, QFileDialog, QFrame, QSizePolicy,
@@ -500,15 +502,37 @@ class PanelFondo(QWidget):
         w.setStyleSheet("background:transparent;")
         lay = QVBoxLayout(w)
         lay.setContentsMargins(0, 8, 0, 0)
-        lbl = QLabel("Próximamente…")
-        lbl.setStyleSheet(f"color:{TEXT_MUTED};font-size:9pt;background:transparent;")
-        lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        lay.addWidget(lbl)
+        lay.setSpacing(10)
+
+        btn = StyledButton("Elegir Video (MP4)", "#2A2A3F", ACCENT, icon_char="▶", bold=False)
+        btn.clicked.connect(self._elegir_video)
+        lay.addWidget(btn)
+
+        self.lbl_video = QLabel("Sin video seleccionado")
+        self.lbl_video.setStyleSheet(f"color:{TEXT_MUTED};font-size:8pt;background:transparent;")
+        self.lbl_video.setWordWrap(True)
+        lay.addWidget(self.lbl_video)
+        
         lay.addStretch()
         return w
 
+    def _elegir_video(self):
+        archivo, _ = QFileDialog.getOpenFileName(
+            self, "Seleccionar video loop", "",
+            "Videos (*.mp4 *.webm *.mov)"
+        )
+        if archivo:
+            import os
+            self.lbl_video.setText(os.path.basename(archivo))
+            self.proyector.play_video(archivo)
+
     def _cambiar_modo(self, idx):
         self.stack.setCurrentIndex(idx)
+        
+        # Si NO estamos en modo video (idx 2), apagamos el reproductor
+        if idx != 2:
+            self.proyector.stop_video()
+            
         if idx == 0: 
             self.proyector.background_image = ""
             self.proyector.actualizar_estilos()
@@ -539,6 +563,20 @@ class PanelFondo(QWidget):
 #  PANTALLA DE PROYECCIÓN
 # ─────────────────────────────────────────────
 class PantallaProyeccion(QWidget):
+    def _on_video_frame(self, frame):
+        """Convierte el frame del video en una imagen y la manda a pintar"""
+        if frame.isValid():
+            self._video_pixmap = QPixmap.fromImage(frame.toImage())
+            self.update()
+
+    def play_video(self, ruta):
+        self.player.setSource(QUrl.fromLocalFile(ruta))
+        self.player.play()
+        
+    def stop_video(self):
+        self.player.stop()
+        self._video_pixmap = None
+        self.update()
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Proyección — Pantalla Secundaria")
@@ -554,6 +592,18 @@ class PantallaProyeccion(QWidget):
         self._last_size        = None
         self.blur_amount   = 0
         self.dim_alpha     = 0
+
+        # --- NUEVO: MOTOR DE VIDEO ---
+        self._video_pixmap = None
+        self.player = QMediaPlayer()
+        self.audio_output = QAudioOutput()
+        self.player.setAudioOutput(self.audio_output)
+        self.audio_output.setVolume(0) # Silenciamos por si el video tiene sonido
+        
+        self.video_sink = QVideoSink()
+        self.player.setVideoOutput(self.video_sink)
+        self.video_sink.videoFrameChanged.connect(self._on_video_frame)
+        self.player.setLoops(-1) # -1 significa loop infinito
 
         layout = QVBoxLayout()
         layout.setContentsMargins(60, 60, 60, 40)
@@ -655,16 +705,31 @@ class PantallaProyeccion(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        px = self._apply_blur()
-        if px and not px.isNull():
-            scaled = px.scaled(self.size(),
+        
+        # 1. PRIORIDAD: Si hay video, dibujamos el frame del video
+        if self._video_pixmap and not self._video_pixmap.isNull():
+            scaled = self._video_pixmap.scaled(self.size(),
                                Qt.AspectRatioMode.KeepAspectRatioByExpanding,
                                Qt.TransformationMode.SmoothTransformation)
             x = (self.width()  - scaled.width())  // 2
             y = (self.height() - scaled.height()) // 2
             painter.drawPixmap(x, y, scaled)
+            
+        # 2. Si no hay video, buscamos la imagen con blur
         else:
-            painter.fillRect(self.rect(), QColor(self._bg_color_str))
+            px = self._apply_blur()
+            if px and not px.isNull():
+                scaled = px.scaled(self.size(),
+                                   Qt.AspectRatioMode.KeepAspectRatioByExpanding,
+                                   Qt.TransformationMode.SmoothTransformation)
+                x = (self.width()  - scaled.width())  // 2
+                y = (self.height() - scaled.height()) // 2
+                painter.drawPixmap(x, y, scaled)
+            # 3. Si no hay nada, fondo sólido
+            else:
+                painter.fillRect(self.rect(), QColor(self._bg_color_str))
+                
+        # Capa de oscuridad por encima de todo (video o imagen)
         if self.dim_alpha > 0:
             painter.fillRect(self.rect(), QColor(0, 0, 0, self.dim_alpha))
 
