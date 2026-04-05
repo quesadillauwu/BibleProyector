@@ -638,3 +638,4 @@ if __name__ == "__main__":
     ventana_c = PanelControl(ventana_p)
     ventana_c.show()
     sys.exit(app.exec())
+    
