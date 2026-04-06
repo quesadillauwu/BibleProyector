@@ -17,7 +17,7 @@
 * **Interfaz Gráfica:** PyQt6 (Qt)
 * **Procesamiento de Imagen:** Pillow (PIL)
 * **Motor Multimedia:** PyQt6-QtMultimedia (GStreamer en Linux / Media Foundation en Windows)
-* **Fuente de Datos:** Archivo JSON local (`RVA2015_vid_1782.json`). El archivo JSON con el texto bíblico (`RVA2015_vid_1782.json`) utilizado en este proyecto fue obtenido del repositorio [mrk214]((https://github.com/mrk214/bible-data-es-spa)). ¡Agradecemos su esfuerzo por digitalizar y compartir la Palabra!
+* **Fuente de Datos:** Archivo JSON local (`RVA2015_vid_1782.json`). El archivo JSON con el texto bíblico (`RVA2015_vid_1782.json`) utilizado en este proyecto fue obtenido del repositorio [mrk214](https://github.com/mrk214/bible-data-es-spa). ¡Agradecemos su esfuerzo por digitalizar y compartir la Palabra!
 
 ---
 
