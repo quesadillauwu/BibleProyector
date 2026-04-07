@@ -1,34 +1,52 @@
-# BibleProyector
+# BibleProyector 
 
-**BibleProyector** es un software de código abierto diseñado para la proyección de textos bíblicos en doble pantalla (monitor de control + proyector físico). Está optimizado para servicios en iglesias, ofreciendo una interfaz moderna, rápida y un motor de fondos dinámicos.
+![Python Version](https://img.shields.io/badge/Python-3.10+-blue)
+![Platform](https://img.shields.io/badge/Plataforma-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
+![License](https://img.shields.io/badge/Licencia-Open%20Source-success)
 
-## Características Principales
-* **Selección Ágil:** Navegación rápida por Libro, Capítulo y Versículo mediante menús desplegables.
-* **Doble Pantalla Nativa:** Panel de control independiente de la pantalla de proyección.
+**BibleProyector** es un software gratuito y de código abierto diseñado para la proyección de textos bíblicos en pantallas secundarias. Está optimizado para servicios en iglesias, ofreciendo una interfaz elegante, rápida y un potente motor de fondos multimedia.
+
+*(Agrega aquí una captura de pantalla de tu programa)*
+> `![Interfaz de BibleProyector](ruta_de_tu_imagen.png)`
+
+##  Características Principales
+* **Selección Ágil:** Navegación ultra rápida por Libro, Capítulo y Versículo.
+* **Doble Pantalla Nativa:** Panel de control independiente de la pantalla de proyección (soporte para proyector físico o captura vía OBS).
 * **Motor de Fondos (Backgrounds):**
-    * *Color sólido:* Selector de matiz/saturación integrado.
+    * *Color sólido:* Selector de paleta integrado.
     * *Imágenes estáticas:* Soporte para alta resolución con filtro *Blur* (desenfoque) ajustable en tiempo real.
-    * *Fondos animados:* Reproducción nativa de video (MP4/MOV) en bucle (loop) infinito para "Motion Backgrounds".
-* **Interfaz Moderna:** Diseño dark-mode con acentos visuales y sombras dinámicas.
-* **Multiplataforma:** Desarrollado en Python, compatible con Windows, Linux y macOS.
-
-## Especificaciones Técnicas (Tech Stack)
-* **Lenguaje:** Python 3.10+
-* **Interfaz Gráfica:** PyQt6 (Qt)
-* **Procesamiento de Imagen:** Pillow (PIL)
-* **Motor Multimedia:** PyQt6-QtMultimedia (GStreamer en Linux / Media Foundation en Windows)
-* **Fuente de Datos:** Archivo JSON local (`RVA2015_vid_1782.json`). El archivo JSON con el texto bíblico (`RVA2015_vid_1782.json`) utilizado en este proyecto fue obtenido del repositorio [mrk214](https://github.com/mrk214/bible-data-es-spa). ¡Agradecemos su esfuerzo por digitalizar y compartir la Palabra!
+    * *Fondos animados:* Reproducción nativa de video (MP4/MOV) en bucle infinito (Motion Backgrounds).
+    * *Filtro de Oscuridad (Dim):* Mejora el contraste del texto sobre fondos claros.
+* **Transiciones Suaves:** Efecto de desvanecimiento (*crossfade*) al cambiar de versículo.
+* **Interfaz Elegante:** Diseño "Material Dark" profesional y sin distracciones.
 
 ---
 
-## Instalación y Configuración
+##  Descarga Rápida (Para Usuarios de Windows)
 
-Sigue estos pasos para ejecutar el proyecto en cualquier computadora nueva.
+Si solo quieres usar el programa en tu iglesia y no eres programador, no necesitas instalar Python. 
+
+1. Ve a la sección de **[Releases](https://github.com/quesadillauwu/BibleProyector/releases)** a la derecha de esta página.
+2. Descarga el archivo `BibleProyector_v1.0_Windows.rar` (o `.zip`).
+3. Descomprime la carpeta en tu computadora.
+4. Ejecuta el archivo `BibleProyector.exe`. ¡No requiere instalación!
+
+---
+
+##  Soporte, Dudas y Sugerencias
+
+¿Tienes alguna idea para mejorar el programa, encontraste un error, o necesitas ayuda para conectarlo a tu proyector? 
+¡Únete a nuestra comunidad en la pestaña de **[Discussions](https://github.com/quesadillauwu/BibleProyector/discussions)**! Ahí respondemos dudas y tomamos nota para futuras actualizaciones.
+
+---
+
+##  Instalación y Compilación (Para Desarrolladores)
+
+Si eres desarrollador y deseas modificar el código fuente, sigue estos pasos:
 
 ### 1. Clonar el repositorio
-Abre una terminal (o PowerShell en Windows) y descarga el código:
 ```bash
-git clone https://github.com/quesadillauwu/BibleProyector.git
+git clone [https://github.com/quesadillauwu/BibleProyector.git](https://github.com/quesadillauwu/BibleProyector.git)
 cd BibleProyector
 ```
 
@@ -48,41 +66,31 @@ python -m venv venv
 ```
 
 ### 3. Instalar Dependencias
-Con el entorno activado `(venv)`, instala los requerimientos:
+Con el entorno activado, instala los requerimientos:
 ```bash
 pip install -r requirements.txt
 ```
 *(Nota para usuarios Linux: Si los videos MP4 no se reproducen, asegúrate de tener instalados los códecs de tu sistema: `sudo apt install gstreamer1.0-libav gstreamer1.0-plugins-good`)*
 
-### 4. Ejecutar el Proyector
+### 4. Ejecutar el Código
 Asegúrate de que el archivo JSON de la Biblia esté en la misma carpeta que el script principal.
 ```bash
 python main.py
 ```
 
----
-
-## Cómo Usar el Gestor
-
-1.  **Conectar Pantalla:** Si tienes un proyector conectado, marca la casilla *"Pantalla completa (proyector físico)"* y presiona el botón verde **ABRIR PANTALLA**. El texto se lanzará automáticamente al segundo monitor.
-2.  **Buscar Versículo:** Usa la tarjeta central para seleccionar Libro, Capítulo y Versículo. Verás una vista previa del texto.
-3.  **Proyectar:** Presiona el botón morado **✦ PROYECTAR** para mandar el texto a la pantalla principal.
-4.  **Cambiar Fondo:** En la barra lateral izquierda, selecciona el tipo de fondo. Puedes ajustar la oscuridad (dim) para mejorar el contraste del texto dorado/blanco con tu imagen o video.
-
----
-
-## Flujo de Trabajo (Para Desarrolladores)
-
-Si haces modificaciones en el código y quieres guardar los cambios en la nube (GitHub), usa los siguientes comandos en la terminal, o utiliza el panel de **Source Control** en VS Code:
-
+### Flujo de Trabajo con Git
+Para guardar tus modificaciones en la nube:
 ```bash
-# 1. Preparar los archivos modificados
 git add .
-
-# 2. Guardar la versión con un mensaje descriptivo
 git commit -m "Agregada nueva función X"
-
-# 3. Subir los cambios al repositorio
 git push
 ```
-Para descargar las últimas actualizaciones en otra computadora, simplemente usa: `git pull`.
+
+---
+
+##  Especificaciones Técnicas (Tech Stack)
+* **Lenguaje:** Python 3.10+
+* **Interfaz Gráfica:** PyQt6 (Qt)
+* **Procesamiento de Imagen:** Pillow (PIL)
+* **Motor Multimedia:** PyQt6-QtMultimedia (GStreamer en Linux / Media Foundation en Windows)
+* **Fuente de Datos:** El archivo JSON con el texto bíblico (`RVA2015_vid_1782.json`) utilizado en este proyecto fue obtenido del increíble repositorio de [mrk214](https://github.com/mrk214/bible-data-es-spa). ¡Agradecemos su esfuerzo por digitalizar y compartir la Palabra!
