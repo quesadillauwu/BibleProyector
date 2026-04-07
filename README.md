@@ -6,9 +6,6 @@
 
 **BibleProyector** es un software gratuito y de código abierto diseñado para la proyección de textos bíblicos en pantallas secundarias. Está optimizado para servicios en iglesias, ofreciendo una interfaz elegante, rápida y un potente motor de fondos multimedia.
 
-*(Agrega aquí una captura de pantalla de tu programa)*
-> `![Interfaz de BibleProyector](ruta_de_tu_imagen.png)`
-
 ##  Características Principales
 * **Selección Ágil:** Navegación ultra rápida por Libro, Capítulo y Versículo.
 * **Doble Pantalla Nativa:** Panel de control independiente de la pantalla de proyección (soporte para proyector físico o captura vía OBS).
