@@ -2,3 +2,10 @@ venv/
 __pycache__/
 *.pyc
 .vscode/
+/build/
+/dist/
+*.spec
+env/
+*.exe
+*.rar
+*.zip
