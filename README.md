@@ -1,4 +1,4 @@
-# BibleProyector 
+# BibleProyector
 
 ![Python Version](https://img.shields.io/badge/Python-3.10+-blue)
 ![Platform](https://img.shields.io/badge/Plataforma-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
@@ -6,7 +6,7 @@
 
 **BibleProyector** es un software gratuito y de código abierto diseñado para la proyección de textos bíblicos en pantallas secundarias. Está optimizado para servicios en iglesias, ofreciendo una interfaz elegante, rápida y un potente motor de fondos multimedia.
 
-##  Características Principales
+## Características Principales
 * **Selección Ágil:** Navegación ultra rápida por Libro, Capítulo y Versículo.
 * **Doble Pantalla Nativa:** Panel de control independiente de la pantalla de proyección (soporte para proyector físico o captura vía OBS).
 * **Motor de Fondos (Backgrounds):**
@@ -19,25 +19,33 @@
 
 ---
 
-##  Descarga Rápida (Para Usuarios de Windows)
+## Descarga Rápida (Windows y Linux)
 
-Si solo quieres usar el programa en tu iglesia y no eres programador, no necesitas instalar Python. 
+Si solo quieres usar el programa en tu iglesia y no eres programador, no necesitas instalar Python ni usar la terminal. 
 
+**Para Windows:**
 1. Ve a la sección de **[Releases](https://github.com/quesadillauwu/BibleProyector/releases)** a la derecha de esta página.
 2. Descarga el archivo `BibleProyector_v1.0_Windows.rar` (o `.zip`).
 3. Descomprime la carpeta en tu computadora.
 4. Ejecuta el archivo `BibleProyector.exe`. ¡No requiere instalación!
 
+**Para Linux (Ubuntu/Debian/etc.):**
+1. Ve a la sección de **[Releases](https://github.com/quesadillauwu/BibleProyector/releases)** a la derecha de esta página.
+2. Descarga el archivo `BibleProyector_v1.0_Linux.zip`.
+3. Descomprime la carpeta en tu computadora.
+4. Dale permisos de ejecución al archivo (Clic derecho > Propiedades > Permisos > "Permitir ejecutar el archivo como un programa", o desde la terminal con `chmod +x BibleProyector`).
+5. Dale doble clic al archivo `BibleProyector` para abrirlo.
+
 ---
 
-##  Soporte, Dudas y Sugerencias
+## Soporte, Dudas y Sugerencias
 
 ¿Tienes alguna idea para mejorar el programa, encontraste un error, o necesitas ayuda para conectarlo a tu proyector? 
 ¡Únete a nuestra comunidad en la pestaña de **[Discussions](https://github.com/quesadillauwu/BibleProyector/discussions)**! Ahí respondemos dudas y tomamos nota para futuras actualizaciones.
 
 ---
 
-##  Instalación y Compilación (Para Desarrolladores)
+## Instalación y Compilación (Para Desarrolladores)
 
 Si eres desarrollador y deseas modificar el código fuente, sigue estos pasos:
 
@@ -85,7 +93,7 @@ git push
 
 ---
 
-##  Especificaciones Técnicas (Tech Stack)
+## Especificaciones Técnicas (Tech Stack)
 * **Lenguaje:** Python 3.10+
 * **Interfaz Gráfica:** PyQt6 (Qt)
 * **Procesamiento de Imagen:** Pillow (PIL)
